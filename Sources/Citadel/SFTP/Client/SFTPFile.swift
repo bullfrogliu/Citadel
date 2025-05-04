@@ -198,7 +198,7 @@ public final class SFTPFile {
         guard self.isActive else { throw SFTPError.fileHandleInvalid }
         
         var data = data
-        let sliceLength = 256_000 // https://github.com/apple/swift-nio-ssh/issues/99
+        let sliceLength = 128_000 // https://github.com/apple/swift-nio-ssh/issues/99
         
         while data.readableBytes > 0, let slice = data.readSlice(length: Swift.min(sliceLength, data.readableBytes)) {
             let result = try await self.client.sendRequest(.write(.init(
